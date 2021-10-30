@@ -1,0 +1,47 @@
+
+
+
+
+'False pretenses, swindle', 
+'Credit card, ATM fraud',
+'Impersonation', 
+'Welfare fraud',
+'Wire fraud',
+'Identify theft', 
+
+
+
+
+
+
+
+
+
+
+
+'Disorderly conduct', 
+'Driving under the influence', 
+'Drunkenness',
+'Liquor law violations',
+'All other offenses',
+'Betting/wagering', 
+'Promoting gambling',
+'Peeping tom',
+'Gambling equipment violations',
+'Curfew, loitering, vagrancy violations',
+'Runaway', 
+'Family offenses, no violence',
+'Animal Cruelty',
+'Trespass of real property', 
+'Pornographs, obscene material',
+'Justifiable homicide'
+
+
+
+
+'Bribery', 
+'Extortion, Blackmail',
+'Embezzlement', 
+'Counterfeiting, forgery',
+'Bad checks',
+'Hacking/Computer Invasion',

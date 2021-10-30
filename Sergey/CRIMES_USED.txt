@@ -1,0 +1,58 @@
+THEFT
+'Theft from motor vehicle',
+'Theft of motor vehicle parts or accessory', 
+'All other larceny',
+'Motor vehicle theft', 
+'Pocket-picking',
+'Purse-snatching',
+'Theft from building',
+'Stolen property offenses', 
+'From coin-operated machine or device', 
+'Shoplifting', 
+
+ASSAULT 
+'Aggravated Assault',
+'Simple assault', 
+'Intimidation', 
+
+
+SEX CRIMES
+'Forcible rape', 
+'Forcible sodomy', 
+'Statutory rape',
+'Forcible fondling', 
+'Human Trafficking/Commercial Sex Act', 
+'Sexual assault with an object',
+'Incest', 
+
+BURGLARY
+'Robbery', 
+'Burglary, Breaking and Entering',
+
+MURDER
+'Murder, non-negligent',
+'Negligent manslaughter',
+
+ABDUCTION
+'Human Trafficking/Involuntary Servitude', 
+'Kidnapping, abduction',
+
+NARCOTICS
+'Drug, narcotic violations', 
+'Drug equipment violations', 
+
+VANDALISM
+'Destruction, damage, vandalism',
+
+ARSON
+'Arson', 
+
+PROSTITUTION
+'Prostitution', 
+'Purchasing prostitution',
+'Assisting or promoting prostitution', 
+
+WEAPONS
+'Weapon law violations',
+
+
