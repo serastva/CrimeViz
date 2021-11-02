@@ -1,0 +1,6 @@
+SELECT *
+FROM criminal_activity
+INNER JOIN locations
+ON criminal_activity.full_address = locations.full_address
+INNER JOIN population_data
+ON locations.zip_code = population_data.zip_code
