@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Crime Data Home Page</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<link rel="icon" href="https://i.pinimg.com/280x280_RS/49/a9/82/49a982dd8c27763a28cb2404c816e6fe.jpg">
+	<link rel="stylesheet" href="static/css/style.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+		integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+		crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+		crossorigin=""></script>
+
+
+
+	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+		}
+
+		#map {
+			width: 600px;
+			height: 400px;
+		}
+	</style>
+
+	<style>
+		#map {
+			width: 800px;
+			height: 500px;
+		}
+
+		.info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba(255, 255, 255, 0.8);
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+			border-radius: 5px;
+		}
+
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777;
+		}
+
+		.legend {
+			text-align: left;
+			line-height: 18px;
+			color: #555;
+		}
+
+		.legend i {
+			width: 18px;
+			height: 18px;
+			float: left;
+			margin-right: 8px;
+			opacity: 0.7;
+		}
+	</style>
+</head>
+
+<body>
+	<!----------------------------------------------NAV BAR----------------------------------------------------------->
+	<div class="navigation">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="index.html">Home</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+				aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Tableau Plots
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="tableau1.html">Tableau1</a>
+							<a class="dropdown-item" href="tableau2.html">Tableau2</a>
+							<a class="dropdown-item" href="tableau3.html">Tableau3</a>
+
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="leaflet.html">Leaflet</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="data.html">Data</a>
+					</li>
+
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+
+	<!----------------------------------------------Jumbotron----------------------------------------------------------->
+	<div class="container">
+		<div class="jumbotron" style="text-align: center">
+			<h1 id="home_title">CrimeViz</h1>
+			<br>
+			<h4>This is an interactive map of Houston made in Leaflet.JS.</h4>
+			<h4>Hover over any part of time to see detailed information </h4>
+			<h4>about the specific zip code. </h4>
+		</div>
+	</div>
+	<!----------------------------------------------Chropleth map----------------------------------------------------------->
+  <div id='map'></div>
+<div>
+   <span id='bubble-chart'></span>
+  <span id='bar-chart'></span>
+</div>
+	<!----------------------------------------------End of map----------------------------------------------------------->
+<script src="https://crossfilter.github.io/crossfilter/crossfilter.v1.min.js"></script>
+<script src='https://d3js.org/d3.v3.min.js'></script>
+<script src='static/data/Projectcrossdata.js'></script>
+<script type="text/javascript" src="static/js/map.js"></script>
+<style>
+.bar--positive {
+  fill: #147bcf;
+}
+
+.bar--negative {
+  fill: pink;
+}
+
+text {
+  font: 10px sans-serif;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.title {
+  font-size: 13px;
+  font-weight:bold;
+}
+.active {
+  stroke: black;
+  stroke-width: 1.5px;
+}
+.reset {
+  fill:blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+text.negative,
+text.positive,
+.label,
+.bar,
+.node text,
+circle {
+  cursor: pointer;
+}
+.dc-chart { font-size: 12px; }
+.dc-table-group { padding-left: 10px; font-size: 14px; font-weight: bold; }
+.dc-table-column { padding-left: 10px; font-size: 12px; font-weight: normal; }
+</style>
+<style>#map { width: 100%; height: 20%; }
+  .info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
+  .legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+</style>
+<style>
+  html, body {
+    height: 50%;
+    margin: 10;
+    margin-top: 5%;
+    margin-left: 5%;
+  }
+  #map {
+    width: 83%;
+    height: 15%;
+  }
+</style>
+	  <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="static/css/style_leaf.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+<script type="text/javascript">
+
+	var map = L.map('map').setView([29.7604, -95.3698],10);
+
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/light-v9',
+		tileSize: 512,
+		zoomOffset: -1
+	}).addTo(map);
+
+
+	// control that shows state info on hover
+	var info = L.control();
+
+	info.onAdd = function (map) {
+		this._div = L.DomUtil.create('div', 'info');
+		this.update();
+		return this._div;
+	};
+
+	info.update = function (props) {
+		this._div.innerHTML = '<h4>Crime Vs Population Density</h4>' +  (props ?
+			'<b> Incidents: '+ props.Incident + '</b><br /> Density:' + props.PopulationDensity + ' people / mi<sup>2</sup>'
+			: 'Hover over a Area');
+	};
+
+	info.addTo(map);
+
+
+	// get color depending on population density value
+	function getColor(d) {
+		return d > 1000 ? '#800026' :
+				d > 500  ? '#BD0026' :
+				d > 200  ? '#E31A1C' :
+				d > 100  ? '#FC4E2A' :
+				d > 50   ? '#FD8D3C' :
+				d > 20   ? '#FEB24C' :
+				d > 10   ? '#FED976' :
+							'#FFEDA0';
+	}
+
+	function style(feature) {
+		return {
+			weight: 2,
+			opacity: 1,
+			color: 'white',
+			dashArray: '3',
+			fillOpacity: 0.7,
+			fillColor: getColor(feature.properties.Incident)
+		};
+	}
+
+	function highlightFeature(e) {
+		var layer = e.target;
+
+		layer.setStyle({
+			weight: 5,
+			color: '#666',
+			dashArray: '',
+			fillOpacity: 0.7
+		});
+
+		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			layer.bringToFront();
+		}
+
+		info.update(layer.feature.properties);
+	}
+
+	var geojson;
+
+	function resetHighlight(e) {
+		geojson.resetStyle(e.target);
+		info.update();
+	}
+
+	function zoomToFeature(e) {
+		map.fitBounds(e.target.getBounds());
+	}
+
+	function onEachFeature(feature, layer) {
+		layer.on({
+			mouseover: highlightFeature,
+			mouseout: resetHighlight,
+			click: zoomToFeature
+		});
+	}
+
+	geojson = L.geoJson(statesData, {
+		style: style,
+		onEachFeature: onEachFeature
+	}).addTo(map);
+
+	map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
+
+
+	var legend = L.control({position: 'bottomright'});
+
+	legend.onAdd = function (map) {
+
+		var div = L.DomUtil.create('div', 'info legend'),
+			grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+			labels = [],
+			from, to;
+
+		for (var i = 0; i < grades.length; i++) {
+			from = grades[i];
+			to = grades[i + 1];
+
+			labels.push(
+				'<i style="background:' + getColor(from + 1) + '"></i> ' +
+				from + (to ? '&ndash;' + to : '+'));
+		}
+
+		div.innerHTML = labels.join('<br>');
+		return div;
+	};
+
+	legend.addTo(map);
+
+</script>
+<script>
+function drawBubble (selector, dispatch, dimension, group) {
+  var margin = {top: 0, right: 0, bottom: 0, left: 0},
+    width = 480 - margin.left - margin.right,
+    height = 480 - margin.top - margin.bottom;
+
+  var onClick;
+
+  var color = d3.scale.category20();
+
+  var bubble = d3.layout.pack()
+    .sort(null)
+    .size([width, height])
+    .padding(1.5);
+
+  var t = d3.transition()
+      .duration(750);
+
+  var svg = d3.select(selector),
+        g = svg.select('g');
+
+  if (!svg.empty()) {
+    svg.select('svg').remove()
+  }
+
+  g = svg.append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .attr('class', 'bubble')
+    .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+
+  var reset = g.append('text')
+    .attr('class', 'reset')
+    .style('display', 'none')
+    .attr('y', 10)
+    .attr('x', 20)
+    .text('reset')
+    .on('click', click)
+
+  function click(d) {
+
+    dimension.filter(d ? d.key : null);
+    dispatch.redraw();
+
+    svg.selectAll('circle').classed('active', false)
+    if(!d) {
+      return reset.style('display', 'none');
+    }
+
+
+    svg.select('.' + btoa(d.key).replace(/=/g, '')).classed('active', true)
+    reset.style('display', 'block')
+  }
+
+  var node = g.selectAll('.node')
+    .data(bubble.nodes({ children: group.all() }).filter(function(d) { return !d.children; }))
+
+  node.enter().append('g')
+    .attr('class', 'node')
+    .attr('transform', function(d) {return 'translate(' + d.x + ',' + d.y + ')'; });
+
+  node.append('title')
+    .text(function(d) { return d.key; });
+
+  node.append('circle')
+    .attr('class', function (d) { return btoa(d.key).replace(/=/g, '')})
+    .attr('r', function(d) { return d.r; })
+    .style('fill', function(d) { return color(d.key); })
+
+  node.append('text')
+    .attr('dy', '.3em')
+    .attr('class', 'label')
+    .style('text-anchor', 'middle')
+
+  dispatch.on('redraw.' + selector, function () {
+    var reset = g.selectAll('.reset')
+
+    node = g.selectAll('.node')
+      .data(bubble.nodes({ children: group.all() }).filter(function(d) { return !d.children; }))
+
+    node
+      .attr('class', 'node')
+      .transition(t)
+      .attr('transform', function(d) {return 'translate(' + d.x + ',' + d.y + ')'; });
+
+    node.select('circle')
+      .on('click', click)
+      .transition(t)
+      .attr('r', function(d) { return d.r; })
+      .style('fill', function(d) { return color(d.key); })
+
+    node.select('text')
+      .attr('dy', '.3em')
+      .style('text-anchor', 'middle')
+      .text(function(d) { return d.key.substring(0, d.r / 3); })
+      .on('click', click)
+
+  })
+}
+
+function drawBar (selector, dispatch, dimension, group) {
+  var margin = {top: 0, right: 0, bottom: 40, left: 50},
+    width = 1000 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom;
+
+  var x = d3.scale.ordinal().rangeRoundBands([0, width], .2);
+  var y = d3.scale.linear().range([height, 0]);
+
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient('bottom').ticks(10);
+
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient('left')
+      .ticks(10);
+
+  var t = d3.transition()
+        .duration(750);
+
+  var svg = d3.select(selector),
+        g = svg.select('g');
+
+  function click(d) {
+    dimension.filter(d ? d.key : null);
+    dispatch.redraw();
+    svg.selectAll('rect').classed('active', false)
+    if(!d) {
+      return reset.style('display', 'none');
+    }
+
+    svg.select('.' + btoa(d.key).replace(/=/g, '')).classed('active', true)
+    reset.style('display', 'block')
+  }
+
+  if (g.empty()) {
+    g = svg.append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    g.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis);
+
+    g.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis)
+      .append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', 6)
+        .attr('dy', '.71em')
+        .style('text-anchor', 'end')
+        .text('Interactions');
+
+    var reset = g.append('text')
+      .attr('class', 'reset')
+      .attr('y', 10)
+      .attr('x', -40)
+      .style('display', 'none')
+      .text('reset')
+      .on('click', click)
+  }
+
+  dispatch.on('redraw.' + selector, function () {
+    x.domain(group.all().map(function(d) { return d.key; }));
+    y.domain([0, d3.max(group.all(), function(d) { return d.value; })]);
+
+    g.select('.y.axis')
+      .transition(t)
+       .call(yAxis)
+
+    var xAxisDom = g.select('.x.axis')
+     .transition(t)
+      .call(xAxis)
+
+    var rects = g.selectAll('rect')
+        .data(group.all());
+
+    rects.enter().append('rect')
+        .on('click', click)
+        .attr('class', function (d) { return btoa(d.key).replace(/=/g, '') })
+
+    rects
+        .classed('bar', true)
+        .classed('bar--positive', function (d) { return 1})
+      .transition(t)
+        .attr('x', function(d) { return x(d.key); })
+        .attr('width', x.rangeBand())
+        .attr('y', function(d) { return y(d.value); })
+        .attr('height', function(d) { return height - y(d.value); })
+
+    var texts = g.selectAll('.label')
+        .data(group.all())
+
+    texts.enter().append('text').attr('class', 'label').on('click', click)
+
+    texts
+      .transition(t)
+        .attr('text-anchor', 'middle')
+        .attr('x', function(d,i) {
+            return x(d.key) + (x.rangeBand() / 2);
+        })
+        .attr('y', function(d,i) {
+            return y(d.value) + ((height - y(d.value)) / 2);
+        })
+        .attr('dy', '.35em')
+        .text(function (d) { return d.value })
+
+  })
+}
+var xf = crossfilter(data)
+
+var topic = xf.dimension(function (d) { return d.Offense_Type }),
+    topics = topic.group().reduceSum(function (d) { return d.Incident; }),
+    zipcode = xf.dimension(function (d) { return d.Zip_Code }),
+    zipcodegrp = zipcode.group().reduceSum(function (d) { return d.Incident; })
+const getTops = (source_group) => {
+      return {
+        all: function () {
+          return source_group.top(15);
+        }
+      };
+    };
+
+var topngrp = getTops(zipcodegrp);
+   
+
+
+var dispatch = d3.dispatch('redraw');
+drawBar('#bar-chart', dispatch, zipcode, topngrp);
+drawBubble('#bubble-chart', dispatch, topic, topics);
+dispatch.redraw();
+
+d3.select(self.frameElement).style("height", "738px");
+</script>
+
+
+</body>
+
+</html>
