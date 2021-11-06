@@ -1,4 +1,9 @@
 body {
+  background-image: url("http://3.bp.blogspot.com/-fB5RikN-eSM/Tru5btLt8jI/AAAAAAAAEmY/wl7r0gycEPM/s1920/texture-background-wallpaper-6.jpg");
+  height: 850px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   padding: 0px;
   margin: 0px;
 }
@@ -8,3 +13,68 @@ html {
   height: 75%;
   margin: 0 auto;
 }
+
+/* -----------------------Navbar------------------------------- */
+.navbar {
+  max-height: 60px;
+}
+.navigation .navbar-brand {
+  color: rgb(0, 0, 0);
+  margin-left: 0px;
+  padding: inherit;
+  font-weight: bold;
+  background-color:rgb(233, 236, 239)
+  
+}
+
+.navbar {
+  background-color:rgb(233, 236, 239);
+  font-size: 25px; 
+}
+
+
+.active, .dropdown-menu .dropdown-item:active a:hover {
+  background-color: rgb(233, 236, 239) !important;
+}
+
+/* Drop Down menu text color*/
+.dropdown-item {
+  color: rgb(0, 0, 0) !important;
+}
+
+
+/* Button highlight color change main bar*/
+.nav-link:hover {
+  background-color:rgb(233, 236, 239)!important;
+ }
+
+
+/* Button highlight color change drop down menu*/
+.dropdown .dropdown-menu .dropdown-item:active, .dropdown .dropdown-menu .dropdown-item:hover {
+  background-color: rgb(233, 236, 239) !important;
+}
+
+.navbar-brand:hover {
+color: rgbrgb(233, 236, 239)!important;
+}
+
+a {
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
