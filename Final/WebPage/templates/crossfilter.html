@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Crime Data Home Page</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="static/css/style.css">
+
+
+
+
+	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+		}
+	</style>
+
+	<style>
+
+		.info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba(255, 255, 255, 0.8);
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+			border-radius: 5px;
+		}
+
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777;
+		}
+
+
+	</style>
+</head>
+
+<body>
+	<!----------------------------------------------NAV BAR----------------------------------------------------------->
+	<div class="navigation">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="index.html">Home</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+				aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavDropdown">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Tableau Plots
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="tableau1.html">Tableau1</a>
+							<a class="dropdown-item" href="tableau2.html">Tableau2</a>
+							<a class="dropdown-item" href="tableau3.html">Tableau3</a>
+
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							JS Plots
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="crossfilter.html">Cross- Filter Plots</a>
+							<a class="dropdown-item" href="leaflet.html">Choropleth - Leaflet Plots</a>
+
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="data.html">Data</a>
+					</li>
+
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+
+	<!----------------------------------------------Jumbotron----------------------------------------------------------->
+	<div class="container" style="width: 100%; height: 49%;">
+		<div class="jumbotron" style="text-align: center;width: 100%;">
+			<h1 id="home_title">CrimeViz</h1>
+			<br>
+			<h5>This is an interactive map  categorizing the crime and  plotting top 10 occurance by zipcode CrossFilter.</h5>
+      <h5>You can click on any bubble to see more detailed information in the bargraph</h5>
+		
+
+      <div>
+       <span id='bubble-chart'></span>
+      <span id='bar-chart'></span>
+      </div>
+	</div>
+</div>
+    </body>
+
+	<!----------------------------------------------End of map----------------------------------------------------------->
+<script src="https://crossfilter.github.io/crossfilter/crossfilter.v1.min.js"></script>
+<script src='https://d3js.org/d3.v3.min.js'></script>
+<script src='static/data/Projectcrossdata.js'></script>
+<style>
+.bar--positive {
+  fill: #147bcf;
+}
+
+.bar--negative {
+  fill: pink;
+}
+
+text {
+  font: 10px sans-serif;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.title {
+  font-size: 13px;
+  font-weight:bold;
+}
+.active {
+  stroke: black;
+  stroke-width: 1.5px;
+}
+.reset {
+  fill:blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+text.negative,
+text.positive,
+.label,
+.bar,
+.node text,
+circle {
+  cursor: pointer;
+}
+</style>
+
+<style>
+  html, body {
+    height: 50%;
+    margin: 10;
+  }
+</style>
+	  <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="static/css/style_leaf.css">
+
+   
+<script>
+function drawBubble (selector, dispatch, dimension, group) {
+  var margin = {top: 0, right: 0, bottom: 0, left: 0},
+    width = 480 - margin.left - margin.right,
+    height = 480 - margin.top - margin.bottom;
+
+  var onClick;
+
+  var color = d3.scale.category20();
+
+  var bubble = d3.layout.pack()
+    .sort(null)
+    .size([width, height])
+    .padding(1.5);
+
+  var t = d3.transition()
+      .duration(750);
+
+  var svg = d3.select(selector),
+        g = svg.select('g');
+
+  if (!svg.empty()) {
+    svg.select('svg').remove()
+  }
+
+  g = svg.append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .attr('class', 'bubble')
+    .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+
+  var reset = g.append('text')
+    .attr('class', 'reset')
+    .style('display', 'none')
+    .attr('y', 10)
+    .attr('x', 20)
+    .text('reset')
+    .on('click', click)
+
+  function click(d) {
+
+    dimension.filter(d ? d.key : null);
+    dispatch.redraw();
+
+    svg.selectAll('circle').classed('active', false)
+    if(!d) {
+      return reset.style('display', 'none');
+    }
+
+
+    svg.select('.' + btoa(d.key).replace(/=/g, '')).classed('active', true)
+    reset.style('display', 'block')
+  }
+
+  var node = g.selectAll('.node')
+    .data(bubble.nodes({ children: group.all() }).filter(function(d) { return !d.children; }))
+
+  node.enter().append('g')
+    .attr('class', 'node')
+    .attr('transform', function(d) {return 'translate(' + d.x + ',' + d.y + ')'; });
+
+  node.append('title')
+    .text(function(d) { return d.key; });
+
+  node.append('circle')
+    .attr('class', function (d) { return btoa(d.key).replace(/=/g, '')})
+    .attr('r', function(d) { return d.r; })
+    .style('fill', function(d) { return color(d.key); })
+
+  node.append('text')
+    .attr('dy', '.3em')
+    .attr('class', 'label')
+    .style('text-anchor', 'middle')
+
+  dispatch.on('redraw.' + selector, function () {
+    var reset = g.selectAll('.reset')
+
+    node = g.selectAll('.node')
+      .data(bubble.nodes({ children: group.all() }).filter(function(d) { return !d.children; }))
+
+    node
+      .attr('class', 'node')
+      .transition(t)
+      .attr('transform', function(d) {return 'translate(' + d.x + ',' + d.y + ')'; });
+
+    node.select('circle')
+      .on('click', click)
+      .transition(t)
+      .attr('r', function(d) { return d.r; })
+      .style('fill', function(d) { return color(d.key); })
+
+    node.select('text')
+      .attr('dy', '.3em')
+      .style('text-anchor', 'middle')
+      .text(function(d) { return d.key.substring(0, d.r / 3); })
+      .on('click', click)
+
+  })
+}
+
+function drawBar (selector, dispatch, dimension, group) {
+  var margin = {top: 0, right: 0, bottom: 40, left: 50},
+    width = 450 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+  var x = d3.scale.ordinal().rangeRoundBands([0, width], .2);
+  var y = d3.scale.linear().range([height, 0]);
+
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient('bottom').ticks(10);
+
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient('left')
+      .ticks(10);
+
+  var t = d3.transition()
+        .duration(750);
+
+  var svg = d3.select(selector),
+        g = svg.select('g');
+
+  function click(d) {
+    dimension.filter(d ? d.key : null);
+    dispatch.redraw();
+    svg.selectAll('rect').classed('active', false)
+    if(!d) {
+      return reset.style('display', 'none');
+    }
+
+    svg.select('.' + btoa(d.key).replace(/=/g, '')).classed('active', true)
+    reset.style('display', 'block')
+  }
+
+  if (g.empty()) {
+    g = svg.append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    g.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
+        .call(xAxis);
+
+    g.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis)
+      .append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', 6)
+        .attr('dy', '.71em')
+        .style('text-anchor', 'end')
+        .text('Interactions');
+
+    var reset = g.append('text')
+      .attr('class', 'reset')
+      .attr('y', 10)
+      .attr('x', -40)
+      .style('display', 'none')
+      .text('reset')
+      .on('click', click)
+  }
+
+  dispatch.on('redraw.' + selector, function () {
+    x.domain(group.all().map(function(d) { return d.key; }));
+    y.domain([0, d3.max(group.all(), function(d) { return d.value; })]);
+
+    g.select('.y.axis')
+      .transition(t)
+       .call(yAxis)
+
+    var xAxisDom = g.select('.x.axis')
+     .transition(t)
+      .call(xAxis)
+
+    var rects = g.selectAll('rect')
+        .data(group.all());
+
+    rects.enter().append('rect')
+        .on('click', click)
+        .attr('class', function (d) { return btoa(d.key).replace(/=/g, '') })
+
+    rects
+        .classed('bar', true)
+        .classed('bar--positive', function (d) { return 1})
+      .transition(t)
+        .attr('x', function(d) { return x(d.key); })
+        .attr('width', x.rangeBand())
+        .attr('y', function(d) { return y(d.value); })
+        .attr('height', function(d) { return height - y(d.value); })
+
+    var texts = g.selectAll('.label')
+        .data(group.all())
+
+    texts.enter().append('text').attr('class', 'label').on('click', click)
+
+    texts
+      .transition(t)
+        .attr('text-anchor', 'middle')
+        .attr('x', function(d,i) {
+            return x(d.key) + (x.rangeBand() / 2);
+        })
+        .attr('y', function(d,i) {
+            return y(d.value) + ((height - y(d.value)) / 2);
+        })
+        .attr('dy', '.35em')
+        .text(function (d) { return d.value })
+
+  })
+}
+var xf = crossfilter(data)
+
+var topic = xf.dimension(function (d) { return d.Offense_Type }),
+    topics = topic.group().reduceSum(function (d) { return d.Incident; }),
+    zipcode = xf.dimension(function (d) { return d.Zip_Code }),
+    zipcodegrp = zipcode.group().reduceSum(function (d) { return d.Incident; })
+const getTops = (source_group) => {
+      return {
+        all: function () {
+          return source_group.top(10);
+        }
+      };
+    };
+
+var topngrp = getTops(zipcodegrp);
+   
+
+
+var dispatch = d3.dispatch('redraw');
+drawBar('#bar-chart', dispatch, zipcode, topngrp);
+drawBubble('#bubble-chart', dispatch, topic, topics);
+dispatch.redraw();
+
+d3.select(self.frameElement).style("height", "7538px");
+</script>
+
+
+</body>
+
+</html>
