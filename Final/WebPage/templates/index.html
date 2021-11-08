@@ -211,16 +211,19 @@
 	<!----------------------------------------------Choropleth map----------------------------------------------------------->
 	<div class="slideContainer">
 		<div class="Slide">
-			<img src="static/img1.png" />
+			<img src="{{ url_for('static', filename='screenshots/img1.png')}}"/>
+			
+
+			
 			<div class="Caption">Photo 1</div>
 		</div>
 		<div class="Slide">
-			<img src="img1.png" />
+			<img src="{{ url_for('static', filename='screenshots/schema.png')}}"/>
 			<!-- <image src="{{url_for('static',filename = 'img1.png')}}" ></image> -->
-			<div class="Caption">Photo 2</div>
+			<div class="Caption">Schema</div>
 		</div>
 		<div class="Slide">
-			<img src="img1.png" />
+			<img src="{{ url_for('static', filename='screenshots/img1.png')}}"/>
 			<div class="Caption">Photo 3</div>
 		</div>
 		<a class="prevBtn">❮</a>
