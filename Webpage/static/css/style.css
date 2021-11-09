@@ -1,8 +1,8 @@
 body {
   background-image: url("http://3.bp.blogspot.com/-fB5RikN-eSM/Tru5btLt8jI/AAAAAAAAEmY/wl7r0gycEPM/s1920/texture-background-wallpaper-6.jpg");
-  height: 850px;
+  height: 1850px;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-size: cover;
   padding: 0px;
   margin: 0px;

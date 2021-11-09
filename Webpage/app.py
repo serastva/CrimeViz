@@ -1,7 +1,5 @@
 from typing import Text
 from flask import Flask, render_template,redirect
-from flask_pymongo import PyMongo
-
 
 
 # Create an instance of Flask
@@ -41,10 +39,6 @@ def leaflet():
 def crossfilter():
     return render_template("crossfilter.html")
 
-#Data
-@app.route("/data.html")
-def data():
-    return render_template("data.html")
 
 
 
