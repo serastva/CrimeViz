@@ -1,0 +1,10 @@
+This project was designed to help the citizens of Houston to easier visualize 
+crime occurances in their neighborhoods.
+
+The user can see specific crime occurances in any zipcode along with data on the population.
+
+The package used to create this project consists of.
+Python + Libraries
+PostgreSQL
+HTML/CSS/JavaScript
+Tableau
